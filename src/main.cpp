@@ -1,21 +1,18 @@
-#include <SFML/Graphics.hpp>
+#include <iostream>
+#include <SFML/System.hpp>
+#include <SFML/Window.hpp>
+#include "windowThread.cpp"
+int main() {
 
-int main()
-{
-    auto window = sf::RenderWindow{ { 1920u, 1080u }, "CMake SFML Project" };
-    window.setFramerateLimit(144);
+    sf::Thread windowThread0(&threadFunc_windowThread, 0);
+    sf::Thread windowThread1(&threadFunc_windowThread, 1);
+    sf::Thread windowThread2(&threadFunc_windowThread, 2);
+    sf::Thread windowThread3(&threadFunc_windowThread, 3);
 
-    while (window.isOpen())
-    {
-        for (auto event = sf::Event{}; window.pollEvent(event);)
-        {
-            if (event.type == sf::Event::Closed)
-            {
-                window.close();
-            }
-        }
-
-        window.clear();
-        window.display();
-    }
+    windowThread0.launch();
+    windowThread1.launch();
+    windowThread2.launch();
+    windowThread3.launch();
+    
+    return 0;
 }
